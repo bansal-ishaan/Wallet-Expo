@@ -30,7 +30,6 @@ CS/LCS20250XX/
 - Do NOT push your project to the wrong folder
 - Do NOT modify or delete other participants' work
 - Do NOT overwrite existing submissions
-- Only ONE submission per team/roll number is allowed
 - Always create your own folder inside your department
 - Follow proper Git workflow (fork → branch → PR)
 
