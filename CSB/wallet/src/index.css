@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+/* Center everything */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Main card */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 20px;
+  width: 360px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  text-align: center;
+  transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Title */
+h1 {
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+/* Address */
+.address {
+  font-size: 12px;
+  word-break: break-all;
+  color: #e0e7ff;
+}
+
+/* Balance */
+.balance {
+  font-size: 20px;
+  margin: 15px 0;
+  font-weight: bold;
+  color: #22c55e;
+}
+
+/* Section spacing */
+.section {
+  margin-top: 20px;
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  outline: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 14px;
+}
+
+/* Placeholder */
+.input::placeholder {
+  color: #ddd;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+/* Hover effect */
+.btn:hover {
+  transform: scale(1.08);
+}
+
+/* Button colors */
+.primary {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: white;
+}
+
+.success {
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  color: white;
+}
+
+.danger {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  color: white;
+}
+
+/* Button layout */
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spinner {
+  margin: 15px auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top: 4px solid #00f5ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tx-status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #e0e7ff;
+}
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.status {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Balance box */
+.balance-box {
+  background: rgba(255,255,255,0.15);
+  padding: 15px;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+.balance-box p {
+  margin: 0;
+  font-size: 12px;
+  color: #ddd;
+}
+
+.balance-box h2 {
+  margin: 5px 0 0;
+  font-size: 22px;
+  color: #22c55e;
+}
+
+/* Full width button */
+.full {
+  width: 100%;
+}
+
+/* Background animation */
+body {
+  background: linear-gradient(270deg, #667eea, #764ba2, #00f5ff);
+  background-size: 600% 600%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glow card */
+.glow {
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 25px rgba(0,255,255,0.4);
+}
+
+/* Glass effect */
+.glass {
+  backdrop-filter: blur(25px);
+  background: rgba(255,255,255,0.1);
+}
+
+/* Neon button */
+.neon {
+  box-shadow: 0 0 10px rgba(0,255,255,0.7);
+}
+
+/* Input glow */
+.glow-input {
+  box-shadow: 0 0 10px rgba(0,255,255,0.3);
+}
+
+/* Copy button */
+.copy {
+  margin-left: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+}
+
+/* Floating animation */
+.card {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Hover glow */
+.btn:hover {
+  box-shadow: 0 0 20px rgba(0,255,255,1);
+}
+
+/* Spinner upgrade */
+.spinner {
+  border-top: 4px solid #00f5ff;
+}
