@@ -23,3 +23,5 @@ npm install
 npm run dev
 
 website link -- https://walletexpoar.vercel.app/
+
+i made another wallet having great UI features with help of caffeineai -- https://wallet-frontend-brown.vercel.app/

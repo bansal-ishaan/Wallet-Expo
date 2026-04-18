@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import Receive from "./Receive";
+import {motion} from "framer-motion";
+import ParticlesBg from "./ParticlesBg";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const contractAddress = "0xf9682902de7fAEE9FDf0ddC4044643BbE816a218";
 
@@ -164,10 +169,12 @@ export default function App() {
   const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(false);
 const [txStatus, setTxStatus] = useState("");
+const [page, setPage] = useState("overview");
+const [showModal, setShowModal] = useState(false);
 
 
 const connectWallet = async () => {
-  if (!window.ethereum) return alert("Install MetaMask");
+ if (!window.ethereum) return toast.error("Install MetaMask");
 
   const provider = new ethers.BrowserProvider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
@@ -184,9 +191,10 @@ const connectWallet = async () => {
 
 const deposit = async () => {
   try {
-    if (!amount) return alert("Enter amount");
+if (!amount) return toast.error("Enter amount");
 
     setLoading(true);
+    toast.loading("Processing...");
     setTxStatus("Waiting for MetaMask...");
 
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -202,9 +210,12 @@ const deposit = async () => {
     await tx.wait();
 
     setTxStatus("✅ Deposit successful");
+    toast.success("Deposit Successful!");
+setShowModal(true);
     await fetchBalance();
   } catch (err) {
     setTxStatus("❌ Transaction failed");
+    toast.error("Transaction Failed");
   } finally {
     setLoading(false);
   }
@@ -212,9 +223,10 @@ const deposit = async () => {
 
 const withdraw = async () => {
   try {
-    if (!amount) return alert("Enter amount");
+  if (!amount) return toast.error("Enter amount");  
 
     setLoading(true);
+    toast.loading("Processing...");
     setTxStatus("Waiting for MetaMask...");
 
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -229,9 +241,12 @@ const withdraw = async () => {
     await tx.wait();
 
     setTxStatus("✅ Withdraw successful");
+    toast.success("Withdraw Successful!");
+setShowModal(true);
     await fetchBalance();
   } catch {
     setTxStatus("❌ Failed");
+    toast.error("Transaction Failed");
   } finally {
     setLoading(false);
   }
@@ -239,9 +254,10 @@ const withdraw = async () => {
 
 const transfer = async () => {
   try {
-    if (!receiver || !amount) return alert("Enter details");
+    if (!receiver || !amount) return toast.error("Enter details");
 
     setLoading(true);
+    toast.loading("Processing...");
     setTxStatus("🟡 Processing transfer...");
 
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -257,9 +273,14 @@ const transfer = async () => {
     await tx.wait();
 
     setTxStatus("✅ Transfer Done");
+    toast.success("Transfer Successful!");
+setShowModal(true);
+
     await fetchBalance();
   } catch {
     setTxStatus("❌ Failed");
+    toast.error("Transaction Failed");
+
   } finally {
     setLoading(false);
   }
@@ -267,9 +288,10 @@ const transfer = async () => {
 
 const sendETH = async () => {
   try {
-    if (!receiver || !amount) return alert("Enter details");
+    if (!receiver || !amount) return toast.error("Enter details");
 
     setLoading(true);
+    toast.loading("Processing...");
     setTxStatus("🟡 Sending ETH...");
 
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -305,7 +327,39 @@ const bal = await contract.balances(userAddress);
 
 return (
   <div className="container">
-    <div className="card glow">
+    <ParticlesBg />
+<Toaster />
+
+ <div className="sidebar">
+  <button
+    className={page === "overview" ? "active" : ""}
+    onClick={() => setPage("overview")}
+  >
+    🏠
+  </button>
+
+  <button
+    className={page === "send" ? "active" : ""}
+    onClick={() => setPage("send")}
+  >
+    💸
+  </button>
+
+  <button
+    className={page === "receive" ? "active" : ""}
+    onClick={() => setPage("receive")}
+  >
+    📥
+  </button>
+</div>
+
+  <div className="main">
+<motion.div
+  className="card glow"
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4 }}
+>
 
       {/* HEADER */}
       <div className="header">
@@ -325,17 +379,17 @@ return (
             {account.slice(0, 6)}...{account.slice(-4)}
             <button
               className="copy"
-              onClick={() => navigator.clipboard.writeText(account)}
+             onClick={() => {
+  navigator.clipboard.writeText(account);
+  toast.success("Copied!");
+}} 
             >
               📋
             </button>
           </p>
 
           {/* BALANCE */}
-          <div className="balance-box glass">
-            <p>Your Balance</p>
-            <h2>{balance} ETH</h2>
-          </div>
+         
 
           {loading && <div className="spinner"></div>}
           <p className="tx-status">{txStatus}</p>
@@ -343,37 +397,62 @@ return (
       )}
 
       {/* AMOUNT */}
-      <div className="section">
-        <input
-          className="input glow-input"
-          placeholder="Amount (ETH)"
-          onChange={(e) => setAmount(e.target.value)}
-        />
+    {page === "overview" && (
+  <>
+    {/* BALANCE */}
+    <div className="balance-box glass">
+      <p>Your Balance</p>
+      <h2>{balance} ETH</h2>
+    </div>
+  </>
+)}
 
-        <div className="btn-group">
-          <button className="btn success neon" onClick={deposit}>
-            Deposit
-          </button>
-          <button className="btn danger neon" onClick={withdraw}>
-            Withdraw
-          </button>
-        </div>
-      </div>
+{page === "send" && (
+  <>
+    <div className="section">
+      <input
+        className="input glow-input"
+        placeholder="Amount (ETH)"
+        onChange={(e) => setAmount(e.target.value)}
+      />
 
-      {/* TRANSFER */}
-      <div className="section">
-        <input
-          className="input glow-input"
-          placeholder="Receiver Address"
-          onChange={(e) => setReceiver(e.target.value)}
-        />
-
-        <button className="btn primary neon full" onClick={transfer}>
-          Transfer ETH
+      <div className="btn-group">
+        <button className="btn success neon" onClick={deposit}>
+          Deposit
+        </button>
+        <button className="btn danger neon" onClick={withdraw}>
+          Withdraw
         </button>
       </div>
+    </div>
 
+    <div className="section">
+      <input
+        className="input glow-input"
+        placeholder="Receiver Address"
+        onChange={(e) => setReceiver(e.target.value)}
+      />
+
+      <button className="btn primary neon full" onClick={transfer}>
+        Transfer ETH
+      </button>
+    </div>
+  </>
+)}
+
+{page === "receive" && <Receive account={account} />}
+      {/* TRANSFER */}
+ 
+    </motion.div>
+  </div>
+  {showModal && (
+  <div className="modal">
+    <div className="modal-box">
+      <h2>🎉 Transaction Successful</h2>
+      <button onClick={() => setShowModal(false)}>Close</button>
     </div>
   </div>
+)}
+</div>
 );
 }
