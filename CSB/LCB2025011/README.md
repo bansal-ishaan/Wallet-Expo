@@ -12,7 +12,7 @@ The repository is split into:
 ## 2) Core Features
 
 ### Wallet Features
-- Create a new wallet (mnemonic-based)
+- Create a new wallet 
 - Import an existing wallet using seed phrase or private key
 - Encrypt and store wallet data in browser storage
 - Unlock wallet using password
